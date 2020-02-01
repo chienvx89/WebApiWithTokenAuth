@@ -1,0 +1,1 @@
+link: https://www.c-sharpcorner.com/blogs/jwt-based-tokenisation-via-net-core
