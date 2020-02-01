@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -23,11 +23,11 @@ namespace WebApiWithTokenAuth.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IEnumerable<WeatherForecast> Get()
         {
-            _logger.LogError("");
-
+            //Get claim here
+            var temp = User.Claims.Where(ob => ob.Type == "display-name") ;
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

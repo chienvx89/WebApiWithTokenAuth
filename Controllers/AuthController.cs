@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using WebApiWithTokenAuth.FakeData;
+using WebApiWithTokenAuth.Libraries;
 
 namespace WebApiWithTokenAuth.Controllers
 {
@@ -24,18 +25,7 @@ namespace WebApiWithTokenAuth.Controllers
 
             if (user.UserName == "chien" && user.Password == "abc@123")
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KeyForSignInSecret@1234"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:2000",
-                    audience: "http://localhost:2000",
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: signinCredentials
-                );
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                string tokenString = AuthenServices.GetTokenString();
                 return Ok(new { Token = tokenString });
             }
             else
