@@ -15,10 +15,7 @@ namespace WebApiWithTokenAuth.Libraries
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KeyForSignInSecret@1234"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-            var cusClaim = new List<Claim>()
-            {
-
-            };
+            
             var tokeOptions = new JwtSecurityToken(
                 issuer: "http://localhost:5001",
                 audience: "http://localhost:5001",
@@ -26,7 +23,8 @@ namespace WebApiWithTokenAuth.Libraries
                     new Claim("display-name", "Xuan Dieu"),
                      new Claim("permission","admin")
                 },
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.UtcNow.AddSeconds(20),
+                
                 signingCredentials: signinCredentials
             );
 

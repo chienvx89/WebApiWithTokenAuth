@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using WebApiWithTokenAuth.Libraries;
 
 namespace WebApiWithTokenAuth
 {
@@ -41,9 +42,11 @@ namespace WebApiWithTokenAuth
                    ValidateAudience = true,
                    ValidateLifetime = true,
                    ValidateIssuerSigningKey = true,
+                   //RequireExpirationTime=true,
 
                    ValidIssuer = "http://localhost:5001",
                    ValidAudience = "http://localhost:5001",
+                   LifetimeValidator = TokenLifetimeValidator.Validate,
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KeyForSignInSecret@1234"))
                };
            });
